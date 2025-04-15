@@ -35,35 +35,34 @@ function setup() {
     });
   }
 
-  // 建立第一個按鈕
+  // 更新按鈕的位置
   button1 = createButton('自我介紹');
-  button1.position(50, 50); // 設定在畫布左上角
-  button1.size(100, 50);  // 設定按鈕大小
-  button1.style('font-size', '20px'); // 設定按鈕字型大小
-  button1.style('background-color', '#fcf6bd'); // 設定按鈕背景顏色
-  button1.style('border', '1px solid #fcf6bd'); // 設定按鈕邊框顏色
-  button1.style('border-radius', '10px'); // 設定按鈕圓角
-  button1.mouseOver(() => currentSprite = { sprite: sprite9, frames: 9, width: 96, height: 105 }); // 動作1
-  button1.mouseOut(() => currentSprite = null);  // 滑鼠移出時不顯示動畫 
+  button1.position(180, 50); // 將「自我介紹」移到原「作品集」的位置
+  button1.size(100, 50);
+  button1.style('font-size', '20px');
+  button1.style('background-color', '#fcf6bd');
+  button1.style('border', '1px solid #fcf6bd');
+  button1.style('border-radius', '10px');
+  button1.mouseOver(() => currentSprite = { sprite: sprite9, frames: 9, width: 96, height: 105 });
+  button1.mouseOut(() => currentSprite = null);
   button1.mousePressed(() => showIframe('https://stella0808.github.io/20250412/')); // 按下按鈕顯示 iframe
 
-  // 建立第二個按鈕（作品集）
-  button2 = createButton('作品集');  // 設定第二個按鈕
-  button2.position(180, 50); // 設定在第一個按鈕右邊
-  button2.size(100, 50);  // 設定按鈕大小
-  button2.style('font-size', '20px'); // 設定按鈕字型大小
-  button2.style('background-color', '#fcf6bd'); // 設定按鈕背景顏色
-  button2.style('border', '1px solid #fcf6bd'); // 設定按鈕邊框顏色
-  button2.style('border-radius', '10px'); // 設定按鈕圓角
-  button2.mouseOver(() => currentSprite = { sprite: spriteAction2, frames: 8, width: 126, height: 108 }); // 動作2
-  button2.mouseOut(() => currentSprite = null); // 滑鼠移出時不顯示動畫
-  button2.mousePressed(() => toggleSubOptions()); // 點擊時切換子選項顯示狀態
+  button2 = createButton('作品集');
+  button2.position(50, 50); // 將「作品集」移到原「自我介紹」的位置
+  button2.size(100, 50);
+  button2.style('font-size', '20px');
+  button2.style('background-color', '#fcf6bd');
+  button2.style('border', '1px solid #fcf6bd');
+  button2.style('border-radius', '10px');
+  button2.mouseOver(() => currentSprite = { sprite: spriteAction2, frames: 8, width: 126, height: 108 });
+  button2.mouseOut(() => currentSprite = null);
+  button2.mousePressed(() => toggleSubOptions());
   button2.mouseOut(() => {
     setTimeout(() => {
-      if (!isMouseOverSubButtons() && !isMouseOverButton2()) { // 如果滑鼠不在子選項上，則隱藏子選項
-        subOptionsVisible = false; // 滑鼠移出時隱藏子選項
+      if (!isMouseOverSubButtons() && !isMouseOverButton2()) {
+        subOptionsVisible = false;
       }
-    }, 100); // 延遲 100 毫秒後檢查滑鼠位置
+    }, 100);
   });
 
   // 新增子選項
@@ -76,17 +75,17 @@ function setup() {
   ];
 
   let yOffset = 110; // 子選項的初始垂直位置
-  subOptions.forEach((option, index) => { // 建立每個子選項按鈕
-    let subButton = createButton(option.label); // 設定子選項按鈕
-    subButton.position(180, yOffset + index * 60); // 每個子選項按鈕垂直間隔 60px
-    subButton.size(100, 50); // 設定按鈕大小
-    subButton.style('font-size', '16px'); // 設定按鈕字型大小
-    subButton.style('background-color', '#fcf6bd'); // 設定按鈕背景顏色
-    subButton.style('border', '1px solid #fcf6bd'); // 設定按鈕邊框顏色
-    subButton.style('border-radius', '10px'); // 設定按鈕圓角
-    subButton.mousePressed(() => showIframe(option.url)); // 點選子選項時嵌入對應的網頁
-    subButton.hide(); // 預設隱藏子選項
-    subButtons.push(subButton); // 儲存子選項按鈕
+  subOptions.forEach((option, index) => {
+    let subButton = createButton(option.label);
+    subButton.position(50, yOffset + index * 60); // 子選項跟隨「作品集」按鈕
+    subButton.size(100, 50);
+    subButton.style('font-size', '16px');
+    subButton.style('background-color', '#fcf6bd');
+    subButton.style('border', '1px solid #fcf6bd');
+    subButton.style('border-radius', '10px');
+    subButton.mousePressed(() => showIframe(option.url));
+    subButton.hide();
+    subButtons.push(subButton);
   });
 
   // 建立第三個按鈕（教學影片）
@@ -160,8 +159,8 @@ function draw() {
   menuY = lerp(menuY, targetMenuY, 0.1); // 使用線性插值平滑移動按鈕位置
 
   // 更新按鈕的位置
-  button1.position(50, menuY); // 自我介紹按鈕
-  button2.position(180, menuY); // 作品集按鈕
+  button1.position(180, menuY); // 自我介紹按鈕
+  button2.position(50, menuY); // 作品集按鈕
   button3.position(310, menuY); // 教學影片按鈕
   button4.position(440, menuY); // 測驗題按鈕
   homeButton.position(570, menuY); // 首頁按鈕
@@ -220,7 +219,11 @@ function showIframe(url) {
   iframe = createElement('iframe'); // 創建 iframe 元素
   iframe.attribute('src', url); // 設定 iframe 的來源網址
   iframe.position(windowWidth * 0.1, windowHeight * 0.2); // 顯示在視窗中間
-  iframe.size(windowWidth * 0.8, windowHeight * 0.7); // 寬為視窗的 80%，高為視窗的 60%
+  iframe.size(windowWidth * 0.8, windowHeight * 0.7); // 寬為視窗的 80%，高為視窗的 70%
+
+  // 確保 iframe 的 z-index 較高
+  iframe.style('position', 'absolute'); // 設置為絕對定位
+  iframe.style('zIndex', '100'); // 提高 z-index，確保在其他元素之上
 }
 
 // 切換子選項顯示狀態的函數
@@ -256,8 +259,22 @@ function drawStar(x, y, radius1, radius2, npoints) { // 繪製星形
     let sy = y + sin(a) * radius1; // 計算 y 座標
     vertex(sx, sy); // 繪製頂點
     sx = x + cos(a + halfAngle) * radius2; // 計算 x 座標
-    sy = y + sin(a + halfAngle) * radius2; // 計算 y 座標
+    sy = y + sin(a + halfAngle) * radius2; // 繪製頂點
     vertex(sx, sy); // 繪製頂點
   }
   endShape(CLOSE);
+}
+
+// 確保下拉選單的 z-index 較高
+const dropdownButton = document.querySelector('.dropdown-button');
+const dropdownMenu = document.querySelector('.dropdown-menu');
+
+if (dropdownButton) {
+  dropdownButton.style.position = 'relative';
+  dropdownButton.style.zIndex = '100';
+}
+
+if (dropdownMenu) {
+  dropdownMenu.style.position = 'absolute';
+  dropdownMenu.style.zIndex = '101';
 }
